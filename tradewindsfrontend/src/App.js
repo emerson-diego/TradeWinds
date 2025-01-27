@@ -1,66 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import GraficoFinanceiro from "./GraficoFinanceiro";
 
 const App = () => {
-  const [financialData, setFinancialData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [ano, setAno] = useState(2000); // Ano padrão
 
-  useEffect(() => {
-    // Função para buscar os dados do backend
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/api/financial-data");
-        if (!response.ok) {
-          throw new Error("Erro ao buscar os dados");
-        }
-        const data = await response.json();
-        setFinancialData(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) return <div>Carregando...</div>;
-  if (error) return <div>Erro: {error}</div>;
+  const handleChangeAno = (e) => {
+    setAno(e.target.value);
+  };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial" }}>
-      <h1>Dados Financeiros</h1>
-      <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>S&P 500</th>
-            <th>Ouro</th>
-            <th>Bovespa</th>
-            <th>Bitcoin</th>
-            <th>USD/BRL</th>
-            <th>IFIX</th>
-            <th>IPCA</th>
-            <th>CDI</th>
-          </tr>
-        </thead>
-        <tbody>
-          {financialData.map((item, index) => (
-            <tr key={index}>
-              <td>{item.date}</td>
-              <td>{item.sp500}</td>
-              <td>{item.gold}</td>
-              <td>{item.bovespa}</td>
-              <td>{item.bitcoin}</td>
-              <td>{item.usd_brl}</td>
-              <td>{item.ifix}</td>
-              <td>{item.ipca}</td>
-              <td>{item.cdi}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div style={{ padding: "20px" }}>
+      <h1>Dashboard Financeiro</h1>
+      <label>
+        Selecione o Ano:{" "}
+        <select value={ano} onChange={handleChangeAno}>
+        <option value={2000}>2000</option>
+        <option value={2001}>2001</option>
+        <option value={2002}>2002</option>
+        <option value={2003}>2003</option>
+        <option value={2004}>2004</option>
+        <option value={2005}>2005</option>
+        <option value={2006}>2006</option>
+        <option value={2007}>2007</option>
+        <option value={2008}>2008</option>
+        <option value={2009}>2009</option>
+        <option value={2010}>2010</option>
+        <option value={2011}>2011</option>
+        <option value={2012}>2012</option>
+        <option value={2013}>2013</option>
+        <option value={2014}>2014</option>
+        <option value={2015}>2015</option>
+        <option value={2016}>2016</option>
+        <option value={2017}>2017</option>
+        <option value={2018}>2018</option>
+        <option value={2019}>2019</option>
+        <option value={2020}>2020</option>
+        <option value={2021}>2021</option>
+        <option value={2022}>2022</option>
+        <option value={2023}>2023</option>
+        <option value={2024}>2024</option>
+        <option value={2025}>2025</option>
+        </select>
+      </label>
+      <GraficoFinanceiro ano={ano} />
     </div>
   );
 };
