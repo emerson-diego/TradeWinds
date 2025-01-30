@@ -60,7 +60,8 @@ const FinancialChart = ({ year = 2023 }) => {
       item["^GSPC"] !== null &&
       item["^BVSP"] !== null &&
       item["GC=F"] !== null &&
-      item["BTC-USD"] !== null
+      item["BTC-USD"] !== null &&
+      item["USDBRL=X"] !== null
   );
 
   if (validData.length === 0) {
@@ -73,14 +74,16 @@ const FinancialChart = ({ year = 2023 }) => {
   const sp500 = validData.map((item) => item["^GSPC"]);
   const gold = validData.map((item) => item["GC=F"]);
   const bitcoin = validData.map((item) => item["BTC-USD"]);
+  const usdbrl = validData.map((item) => item["USDBRL=X"]);
 
   // Verificar valores iniciais para evitar divisão por zero
   const initialBovespa = bovespa[0];
   const initialSp500 = sp500[0];
   const initialGold = gold[0];
   const initialBitcoin = bitcoin[0];
+  const initialUsdbrl = usdbrl[0];
 
-  if (initialBovespa === 0 || initialSp500 === 0 || initialGold === 0 || initialBitcoin === 0) {
+  if (initialBovespa === 0 || initialSp500 === 0 || initialGold === 0 || initialBitcoin === 0 || initialUsdbrl === 0) {
     return <p>Invalid initial data for normalization.</p>;
   }
 
@@ -89,6 +92,7 @@ const FinancialChart = ({ year = 2023 }) => {
   const normalizedSp500 = sp500.map((value) => (value / initialSp500) * 100);
   const normalizedGold = gold.map((value) => (value / initialGold) * 100);
   const normalizedBitcoin = bitcoin.map((value) => (value / initialBitcoin) * 100);
+  const normalizedUsdbrl = usdbrl.map((value) => (value / initialUsdbrl) * 100);
 
   const chartData = {
     labels: labels,
@@ -119,6 +123,13 @@ const FinancialChart = ({ year = 2023 }) => {
         data: normalizedBitcoin,
         borderColor: "rgba(54, 162, 235, 1)",
         backgroundColor: "rgba(54, 162, 235, 0.2)",
+        tension: 0.4,
+      },
+      {
+        label: "USDBRL (Normalized)",
+        data: normalizedUsdbrl,
+        borderColor: "rgba(153, 102, 255, 1)",
+        backgroundColor: "rgba(153, 102, 255, 0.2)",
         tension: 0.4,
       },
     ],
