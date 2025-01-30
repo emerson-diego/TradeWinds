@@ -51,7 +51,7 @@ const FinancialChart = ({ year = 2023 }) => {
   }, [year]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="text-center text-gray-600">Loading...</p>;
   }
 
   // Filtrar dados válidos
@@ -65,7 +65,7 @@ const FinancialChart = ({ year = 2023 }) => {
   );
 
   if (validData.length === 0) {
-    return <p>No valid data available for the selected year.</p>;
+    return <p className="text-center text-gray-600">No valid data available for the selected year.</p>;
   }
 
   // Extrair datas e valores
@@ -84,7 +84,7 @@ const FinancialChart = ({ year = 2023 }) => {
   const initialUsdbrl = usdbrl[0];
 
   if (initialBovespa === 0 || initialSp500 === 0 || initialGold === 0 || initialBitcoin === 0 || initialUsdbrl === 0) {
-    return <p>Invalid initial data for normalization.</p>;
+    return <p className="text-center text-gray-600">Invalid initial data for normalization.</p>;
   }
 
   // Normalizar valores
@@ -164,7 +164,9 @@ const FinancialChart = ({ year = 2023 }) => {
 
   return (
     <div>
-      <h2>Financial Market Evolution Chart ({year})</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Financial Market Evolution Chart ({year})
+      </h2>
       <Line data={chartData} options={chartOptions} />
     </div>
   );
